@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title></title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0
+		}
+
+		.in {
+			width: auto;
+			height: 40px;
+			outline: none;
+			color: skyblue;
+			background: yellow;
+			font-size: 30px;
+		}
+
+		.list {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+		}
+
+		.list div {
+			padding: 4px 6px;
+			text-align: center;
+			margin: 4px 15px;
+			border-radius: 10px;
+			background-color: skyblue;
+			
+		}
+	</style>
+</head>
+
+<body>
+	<div style="float:left;padding:10px;background:#000000">
+		<ul style="border:1px #7f7f7f solid;background:black;float:left;width:536px;height:560px;position:relative">
+		</ul>
+		<h1 id="h1"></h1>
+	</div>
+	<div>
+		<input class="in" type="text">
+			<p>请输入需要点名的人名，人名之间用逗号(中文逗号)隔开</p>
+			<button class="btn">点此提交输入内容</button>
+		<div class="list">
+
+		</div>
+	</div>
+	<script>
+		var arr1 = []
+		function $(el) { return document.querySelector(el) }
+		function el(el) { return document.querySelectorAll(el) }
+		var oUl = document.getElementsByTagName('ul')[0]
+
+
+		var arr = []
+		for(var i=1;i<21;i++){
+			arr.push(`测试数据${i}`)
+		}
+		console.log(arr.length);
+		function writea() {
+			var oLi = ''
+			for (i = 0; i < arr.length; i++) {
+				oLi += '<li style="list-style:none;width:70px;background:rgb(200,200,100);color:white;margin:15px 14px;float:left;text-align:center;">' + arr[i] + '</li>'
+			}
+			oUl.innerHTML = oLi + '<div onclick=kj(); style="float:left;background:#8a2be2;color:white;position:absolute;bottom:13px;left:20%;width:144px;height:80px;line-height:80px;text-align:center;font-size:32px;cursor: pointer;">开始点名</div>' + '<div id="az"  style="float:left;background:#8a2be2;color:white;position:absolute;bottom:13px;left:50%;width:144px;height:80px;line-height:80px;text-align:center;font-size:32px;cursor: pointer;">停止点名</div>'
+			oLI = document.getElementsByTagName('li')
+
+			var t = 0
+			oLI[t].style.background = "white"
+			oLI[t].style.color = "black"
+		}
+		writea()
+		var stop = 0
+		$('.btn').onclick=function(){
+			var str=$('.in').value
+			arr=str.split('，')
+			writea()
+		}
+		$('#az').onclick = function () {
+			stop = 3000
+		}
+		var kj = function () {
+			stop = 0
+			var t = 0
+			//console.log(arr)
+			$('#az').onclick = function () {
+				stop = 3000
+				// var old = arr.splice(t, 1)
+				// arr1.push(old)
+				writea()
+				// var stre = ''
+				// for (var i = 0; i < arr1.length; i++) {
+				// 	stre += `<div>${arr1[i]}</div>`
+				// }
+				//$('.list').innerHTML = stre
+				
+			}
+			var timer = setInterval(function () {
+
+				for (ii = 0; ii < arr.length; ii++) {
+					var oR = Math.ceil(Math.random() * 255)
+					var oG = Math.ceil(Math.random() * 255)
+					var oB = Math.ceil(Math.random() * 255)
+					//console.log(oR,oG,oB)
+					oLI[ii].style.background = "rgb(" + oR + ',' + oG + ',' + oB + ')'
+					var oR = Math.ceil(Math.random() * 255)
+					var oG = Math.ceil(Math.random() * 255)
+					var oB = Math.ceil(Math.random() * 255)
+					oLI[ii].style.color = "rgb(" + oR + ',' + oG + ',' + oB + ')'
+					//console.log(oR,oG,oB)
+				}
+				oLI[t].style.backgroundColor="#ffffff"
+				oLI[t].style.color = "black"
+
+				if (stop === 3000) {
+					tan='选中名字为'+oLI[t].innerText
+					var h1 = document.getElementById('h1')
+					h1.innerHTML=tan
+					h1.style.color = "white"
+					h1.style.textAlign = "center"
+				}
+				t++
+				if (t === arr.length) {
+					t = 0
+				}
+				if (stop === 3000) {
+					clearInterval(timer)
+				}
+			}, 100)
+		}
+
+	</script>
+</body>
+
+</html>
